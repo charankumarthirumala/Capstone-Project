@@ -1,0 +1,6 @@
+Github Url:
+https://github.com/charankumarthirumala/Capstone-Project
+
+Loadbalancer url:
+
+http://ac04a3863c029499a8d232291b9eb00e-263652861.us-west-1.elb.amazonaws.com/
