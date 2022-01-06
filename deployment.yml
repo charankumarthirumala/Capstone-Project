@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: capstone-charan
-        image: charankumarthirumala/charan.$CIRCLE_BUILD_NUM
+        image: charankumarthirumala/charan.18
         imagePullPolicy: Always
         ports:
         - containerPort: 80

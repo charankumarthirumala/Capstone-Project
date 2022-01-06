@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            TAG=charan.$CIRCLE_BUILD_NUM
+            TAG=charan.18
             docker build -t $TAG .
       - run:
           name: List Docker Image
@@ -60,7 +60,7 @@ jobs:
           name: Push Docker image into Docker Hub
           command: |
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            TAG=charan.$CIRCLE_BUILD_NUM
+            TAG=charan.18
             dockerpath=charankumarthirumala/$TAG
             docker tag $TAG $dockerpath
             docker push $dockerpath
@@ -103,10 +103,27 @@ jobs:
             nohup aws cloudformation list-exports > output.txt
             chmod 755 create_aws_kube_infra.sh
             ./create_aws_kube_infra.sh
+      - run:
+          name: update kube cluster
+          command: |
+            # # update cluster with yaml - Rolling Deployment
+             aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name capstone-charan
+             kubectl apply -f deployment.yml
+             kubectl get nodes
+             kubectl get deployment
+             kubectl get pod -o wide
+             kubectl apply -f services.yml
+             kubectl get services
+             kubectl rollout restart deployment/capstone-charan
+             kubectl describe svc capstone-charan            
                        
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   Capstone-Project:
     jobs:
-       - Deploy_AWS_Kube     
+       - lint_Dockerfile
+       - Build_DockerApp:
+            requires: [lint_Dockerfile]
+       - Deploy_AWS_Kube:
+            requires: [Build_DockerApp]
