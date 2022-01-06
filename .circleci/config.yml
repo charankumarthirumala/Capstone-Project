@@ -94,7 +94,7 @@ jobs:
             sudo mv /tmp/eksctl /usr/local/bin
 
       - run:
-          name: Build AWS Kubernetes cluster
+          name: Build AWS Kubernetes cluster.
           command: |
             export TERM=xterm
             aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
