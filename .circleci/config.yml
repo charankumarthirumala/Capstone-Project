@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            TAG=charan.18
+            TAG=charan
             docker build -t $TAG .
       - run:
           name: List Docker Image
@@ -60,7 +60,7 @@ jobs:
           name: Push Docker image into Docker Hub
           command: |
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            TAG=charan.18
+            TAG=charan
             dockerpath=charankumarthirumala/$TAG
             docker tag $TAG $dockerpath
             docker push $dockerpath
