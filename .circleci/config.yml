@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            TAG=charan
+            TAG=charan.$CIRCLE_BUILD_NUM
             docker build -t $TAG .
       - run:
           name: List Docker Image
